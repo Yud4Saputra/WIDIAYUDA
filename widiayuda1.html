@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIDIA❤️YUDA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --pink-utama: #ff3366;
+            --merah: #ff0000;
+            --hitam: #000000;
+            --putih: #ffffff;
+            --kertas: #fff0f5; 
+            --glass-border: rgba(255, 255, 255, 0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fad0c4 100%);
+            min-height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            padding: 20px 0; overflow: hidden;
+        }
+
+        /* --- BACKGROUND PARTICLES --- */
+        .bg-particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .particle { position: absolute; top: -10vh; color: rgba(255, 255, 255, 0.8); animation: fall-spin linear infinite; }
+        @keyframes fall-spin {
+            0% { transform: translateY(0); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(115vh); opacity: 0; }
+        }
+
+        /* --- CONTAINER KARTU UTAMA --- */
+        .container {
+            position: relative; z-index: 10; width: 92%; max-width: 500px;
+            transition: opacity 0.5s ease;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: 35px;
+            overflow: hidden; box-shadow: 0 25px 50px rgba(255, 51, 102, 0.2);
+            text-align: center;
+        }
+
+        .photo-container { 
+            width: 100%; margin-bottom: -20px; 
+            -webkit-mask-image: linear-gradient(to bottom, black 88%, transparent 100%); 
+            mask-image: linear-gradient(to bottom, black 88%, transparent 100%); 
+        }
+        .hero-img { width: 100%; display: block; height: auto; }
+        
+        .content { padding: 10px 30px 35px 30px; position: relative; z-index: 2; }
+        .text-message { font-size: 1.05rem; color: #000; margin-bottom: 20px; font-weight: 600; }
+        .highlight { font-family: 'Dancing Script', cursive; color: var(--pink-utama); font-size: 1.8rem; font-weight: 700; display: block; margin-top: 5px; }
+
+        .btn {
+            background: var(--pink-utama); color: white; border: none; padding: 15px;
+            border-radius: 50px; font-weight: 700; cursor: pointer; width: 100%; font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.3s;
+        }
+        .btn:hover { background: white; color: var(--pink-utama); transform: translateY(-3px); }
+
+        /* --- OVERLAY LAYAR HITAM --- */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); z-index: 100;
+            justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.5s;
+        }
+
+        /* --- AMPLOP (ANIMASI) --- */
+        .envelope-wrapper {
+            position: absolute; width: 300px; height: 200px;
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.5s;
+        }
+        .envelope {
+            position: relative; width: 300px; height: 200px; background: #ff3366;
+            border-radius: 0 0 10px 10px; z-index: 1;
+        }
+        .flap {
+            position: absolute; top: 0; left: 0; width: 0; height: 0;
+            border-left: 150px solid transparent; border-right: 150px solid transparent;
+            border-top: 110px solid #ff5e78; transform-origin: top;
+            transition: transform 0.6s 0.2s; z-index: 5;
+        }
+        .pocket {
+            position: absolute; bottom: 0; left: 0; width: 0; height: 0;
+            border-left: 150px solid transparent; border-right: 150px solid transparent;
+            border-bottom: 110px solid #ff2e63; z-index: 4; border-radius: 0 0 10px 10px;
+        }
+        
+        /* Animasi Amplop */
+        .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 0; }
+        .envelope-wrapper.fade-out { opacity: 0; pointer-events: none; }
+
+        /* --- KERTAS SURAT ASLI --- */
+        .letter-paper {
+            display: none; 
+            position: relative;
+            width: 90%; max-width: 500px;
+            background: #fff0f5; 
+            border-radius: 15px; padding: 30px;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+            border: 4px solid var(--pink-utama);
+            text-align: center;
+            transform: scale(0.5); opacity: 0;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-height: 90vh; overflow-y: auto;
+        }
+
+        .letter-paper.show { transform: scale(1); opacity: 1; }
+
+        /* LOGO & TEXT DI SURAT */
+        .letter-header {
+            font-family: 'Dancing Script', cursive; font-size: 2.2rem;
+            color: var(--pink-utama); margin-bottom: 20px; font-weight: bold;
+            border-bottom: 2px dashed #ff3366; padding-bottom: 10px;
+        }
+        .letter-body {
+            font-size: 1.1rem; color: #000000; /* HITAM PEKAT */
+            line-height: 1.8; text-align: left; font-weight: 500;
+        }
+        
+        .btn-next {
+            margin-top: 25px; background: white; color: var(--pink-utama);
+            border: 2px solid var(--pink-utama); padding: 12px 30px;
+            border-radius: 50px; font-weight: bold; cursor: pointer;
+            width: 100%; transition: 0.3s; font-size: 1rem;
+        }
+        .btn-next:hover { background: var(--pink-utama); color: white; }
+
+        /* RESPONSIF HP */
+        @media (max-width: 480px) {
+            .letter-header { font-size: 1.8rem; }
+            .letter-body { font-size: 0.95rem; }
+            .letter-paper { width: 95%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-particles" id="particles"></div>
+
+    <div class="container" id="mainCard">
+        <div class="glass-card">
+            <div class="photo-container">
+                <img src="media/yuda2.png" alt="Yuda" class="hero-img">
+            </div>
+            <div class="content">
+                <p class="text-message">
+                    "Hasian Widia, adong do tonangku tu ho Widia hasian, jalo ma da hasian." <br>
+                    <span class="highlight">Unang lupa dibuka da...</span>
+                </p>
+                <button class="btn" onclick="startAnimation()">
+                    Hasian, buka ma tona sian si Yuda on da.
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        
+        <div class="envelope-wrapper" id="envelopeAnim">
+            <div class="envelope">
+                <div class="flap"></div>
+                <div class="pocket"></div>
+            </div>
+        </div>
+
+        <div class="letter-paper" id="realLetter">
+            <div class="letter-header">Hasianku Retno Widia</div>
+            
+            <div class="letter-body">
+                Selamat hari Valentine ma di hita na dua. Di ari na uli on, adong do na naeng hupasahat tu ho sian ias ni rohakku.<br><br>
+
+                <strong>Tangiangku,</strong> sai dipasupasu Tuhan ma hubungan hita jala dilehon gogoma di ho asa boi muba gabe hurang cuek tu au. Boan au di bagasan roham, hasian. Molo huajari ho, olo ma ho mangihuthon au, ai naeng patureonku do ngolum jala pamalumonku angka luka lama na mambahen hansit roham hian.<br><br> 
+                
+                <strong>Janji do au,</strong> holan ho do nampuna rohakku sahat tu ujung ni ngolukku. Dang tadinghononku ho, jala dang muba rohakku manang mangose janji au tu ho.<br><br>
+
+                Holong situtu do rohakku tu ho, boru Siallagan nampuna rohakku. ❤️
+            </div>
+            
+            <a href="widiayuda2.html" style="text-decoration: none;">
+                <button class="btn-next">Lanjut Hasian ❤️</button>
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const icons = ['❤️', '💖', '💌', '🌹', '✨'];
+            for (let i = 0; i < 50; i++) {
+                const el = document.createElement('div');
+                el.classList.add('particle');
+                el.innerText = icons[Math.floor(Math.random() * icons.length)];
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                el.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                el.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(el);
+            }
+        }
+
+        function startAnimation() {
+            // Hilangkan Kartu Utama
+            document.getElementById('mainCard').style.opacity = '0';
+            setTimeout(() => { document.getElementById('mainCard').style.display = 'none'; }, 500);
+
+            // Tampilkan Layar Hitam
+            const overlay = document.getElementById('modalOverlay');
+            overlay.style.display = 'flex';
+            setTimeout(() => { overlay.style.opacity = '1'; }, 50);
+
+            // Buka Amplop
+            const envelope = document.getElementById('envelopeAnim');
+            setTimeout(() => { envelope.classList.add('open'); }, 500);
+
+            // Hilangkan Amplop & Tampilkan Surat
+            setTimeout(() => {
+                envelope.classList.add('fade-out');
+                
+                const letter = document.getElementById('realLetter');
+                letter.style.display = 'block';
+                setTimeout(() => { letter.classList.add('show'); }, 100);
+
+            }, 1200); 
+        }
+
+        window.onload = createParticles;
+    </script>
+</body>
+</html>

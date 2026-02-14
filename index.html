@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIDIA❤️YUDA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --pink-utama: #ff3366;
+            --merah: #ff0000;
+            --hitam: #000000; /* UBAH JADI HITAM PEKAT */
+            --putih: #ffffff;
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --text-color: #000000; /* UBAH JADI HITAM PEKAT */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fad0c4 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 20px 0;
+        }
+
+        /* --- BACKGROUND ANIMATION --- */
+        .bg-particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; overflow: hidden; pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            top: -10vh;
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: 0 0 5px rgba(255, 20, 147, 0.2);
+            animation: fall-spin linear infinite;
+        }
+
+        @keyframes fall-spin {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(115vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- CONTAINER UTAMA --- */
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 92%;
+            max-width: 500px;
+            perspective: 1000px;
+            margin: auto;
+        }
+
+        /* --- KARTU GLASSMORPHISM --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.50);
+            backdrop-filter: blur(25px) saturate(120%);
+            -webkit-backdrop-filter: blur(25px) saturate(120%);
+            border: 1px solid var(--glass-border);
+            border-radius: 35px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(255, 51, 102, 0.2);
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .main-card-animation {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardEntrance 1s ease-out forwards;
+        }
+
+        @keyframes cardEntrance {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- FOTO FULL --- */
+        .photo-container {
+            width: 100%;
+            position: relative;
+            -webkit-mask-image: linear-gradient(to bottom, black 88%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 88%, transparent 100%);
+            margin-bottom: -20px;
+        }
+
+        .hero-img {
+            width: 100%;
+            display: block;
+            height: auto;
+        }
+
+        /* --- AREA TEKS --- */
+        .content {
+            padding: 10px 30px 35px 30px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .text-message {
+            font-size: 1.05rem;
+            color: var(--text-color); /* HITAM PEKAT */
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-weight: 600; /* Sedikit ditebalkan agar makin jelas */
+            /* Shadow putih agar teks hitam menonjol di background transparan */
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+        }
+
+        .highlight {
+            font-family: 'Dancing Script', cursive;
+            color: var(--pink-utama);
+            font-size: 1.8rem;
+            display: block;
+            margin-top: 8px;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 1);
+        }
+
+        /* --- TOMBOL --- */
+        .btn-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .btn {
+            border: 2px solid transparent;
+            padding: 15px;
+            border-radius: 50px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* 1. Tombol OLO */
+        .btn-olo {
+            background-color: var(--pink-utama); color: var(--putih);
+            border-color: var(--pink-utama);
+        }
+        .btn-olo:hover, .btn-olo:active {
+            background-color: var(--putih); color: var(--pink-utama);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 51, 102, 0.4);
+        }
+
+        /* 2. Tombol DAONG */
+        .btn-daong {
+            background-color: var(--hitam); color: var(--merah);
+            border-color: var(--hitam);
+        }
+        .btn-daong:hover, .btn-daong:active {
+            background-color: var(--merah); color: var(--hitam);
+            border-color: var(--merah);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        /* 3. Tombol POPUP HAPPY */
+        .btn-popup-happy {
+            background-color: var(--putih); color: var(--pink-utama);
+            border: 2px solid var(--pink-utama);
+        }
+        .btn-popup-happy:hover, .btn-popup-happy:active {
+            background-color: var(--pink-utama); color: var(--putih);
+            transform: translateY(-3px);
+        }
+
+        /* 4. Tombol RESET (Maaf Hasian) */
+        .btn-reset {
+            background-color: #f1f2f6; 
+            color: #000000; /* HITAM PEKAT */
+            border: none;
+        }
+        .btn-reset:hover { background-color: #dfe4ea; color: #000000; }
+
+        /* --- POPUP CONFIG --- */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            z-index: 100; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.4s ease; padding: 20px;
+            overflow-y: auto;
+        }
+        .modal.active { opacity: 1; }
+
+        .modal-content {
+            width: 92%; max-width: 500px;
+            transform: scale(0.8);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            margin: auto;
+        }
+        .modal.active .modal-content { transform: scale(1); }
+        a { text-decoration: none; display: block; width: 100%; }
+
+
+        /* MEDIA QUERY HP */
+        @media (max-width: 480px) {
+            body { padding: 10px 0; }
+            .content { padding: 5px 20px 25px 20px; }
+            .photo-container { margin-bottom: -15px; }
+            .text-message {
+                font-size: 0.95rem;
+                line-height: 1.5;
+                margin-bottom: 20px;
+            }
+            .highlight {
+                font-size: 1.5rem;
+                margin-top: 5px;
+            }
+            .btn {
+                padding: 12px;
+                font-size: 0.95rem;
+            }
+            .btn-wrapper { gap: 12px; }
+            .glass-card { border-radius: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-particles" id="particles"></div>
+
+    <div class="container">
+        <div class="glass-card main-card-animation">
+            <div class="photo-container">
+                <img src="media/yuda1.png" alt="Yuda" class="hero-img">
+            </div>
+            <div class="content">
+                <p class="text-message">
+                    "Hasian, boi do ho gabe Valentin-hu? Boi do dongananki au sahat tu ujung ni ngolukku? <br>
+                    <span class="highlight">Marsumpah do au, holan ho do huhalongi salelengna."</span>
+                </p>
+                <div class="btn-wrapper">
+                    <button class="btn btn-olo" onclick="openModal('happy')">Olo hasianku</button>
+                    <button class="btn btn-daong" onclick="openModal('sad')">Daong Hasianku maaf</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modalHappy">
+        <div class="glass-card modal-content">
+            <div class="photo-container">
+                <img src="media/Yudabahagia.png" alt="Bahagia" class="hero-img">
+            </div>
+            <div class="content">
+                <p class="text-message">
+                    "Mauliate ma da hasian, mansai sonang do rohakku. Unang tadinghon au dah, naeng sai rap hita sahat tu salelengna. Holong situtu do rohakku tu ho."
+                </p>
+                <a href="widiayuda1.html">
+                    <button class="btn btn-popup-happy">Pencet ini hasian</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modalSad">
+        <div class="glass-card modal-content">
+            <div class="photo-container">
+                <img src="media/yudanangis.png" alt="Sedih" class="hero-img">
+            </div>
+            <div class="content">
+                <p class="text-message">
+                    "Hasian, lungun situtu do rohakku jala marisuang, jahat do ho hasian..."
+                </p>
+                <button class="btn btn-reset" onclick="resetWeb()">Maaf hasian</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- SCRIPT PARTIKEL ---
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const icons = [ '❤️', '💖', '💗', '💕', '🌹', '🌺', '🌷', '🌸', '✨' ];
+            const particleCount = 75;
+
+            for (let i = 0; i < particleCount; i++) {
+                const el = document.createElement('div');
+                el.classList.add('particle');
+                el.innerText = icons[Math.floor(Math.random() * icons.length)];
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.fontSize = (Math.random() * 25 + 15) + 'px';
+                el.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                el.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(el);
+            }
+        }
+
+        // --- SCRIPT POPUP ---
+        function openModal(type) {
+            let modal;
+            if (type === 'happy') modal = document.getElementById('modalHappy');
+            else modal = document.getElementById('modalSad');
+            
+            modal.style.display = 'flex';
+            setTimeout(() => { modal.classList.add('active'); }, 50);
+        }
+
+        function resetWeb() {
+            const modal = document.getElementById('modalSad');
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                window.scrollTo(0,0);
+                location.reload();
+            }, 400);
+        }
+
+        window.onload = createParticles;
+    </script>
+</body>
+</html>
